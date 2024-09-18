@@ -32,30 +32,23 @@ int main(void)
         char nome[100];
         int numero;
         scanf("%s %i", nome, &numero);
-        Jogadores[aaa].nome = nome;
+        Jogadores[aaa].nome = strdup(nome);
         Jogadores[aaa].num = numero;
-        printf("Cadastrado o jogador: Nome: %s Numero: %i", Jogadores[aaa].nome, Jogadores[aaa].num);
         scanf("");
     }
     PILHA *pilha = selection_sort(Jogadores, n);
     while(pilha_tamanho(pilha) > 0)
     {
       ITEM *aux = pilha_desempilhar(pilha);
-      printf("Nome: %s\nNum: %i\n", aux->nome, aux->num);
+      printf("Nome: %s Num: %i\n", aux->nome, aux->num);
     }
     pilha_apagar(&pilha);
 }
 
 PILHA *selection_sort(Jogador *Jogadores, int n)
 {
-  printf("\n\n----------- JOGADORES ------------\n\n");
-  for(int i = 0; i < n; i++)
-  {
-    printf("%i: Nome: %s - Numero: %i\n", i, Jogadores[i].nome, Jogadores[i].num);
-  }
-  printf("\n ----------------------------------\n");
   int i, j, min, auxnu;
-  char *auxno;
+  char auxno[100];
   for (i = 0; i < (n-1); i++) 
   {
     min = i;
@@ -64,7 +57,6 @@ PILHA *selection_sort(Jogador *Jogadores, int n)
       {
         if (Jogadores[j].num == Jogadores[min].num)
         {
-          printf("Vou comparar os dois nomes: \nNome J: %s\nNome min: %s", Jogadores[j].nome, Jogadores[min].nome);
           if (strcmp(Jogadores[j].nome, Jogadores[min].nome) == -1)
           {
               min = j;
@@ -87,8 +79,8 @@ PILHA *selection_sort(Jogador *Jogadores, int n)
     PILHA *pilha = pilha_criar();
     for(int i = 0; i < n; i ++)
     {
-    ITEM *aux = jogador_criar(Jogadores[i].nome, Jogadores[i].num);
-    pilha_empilhar(aux, pilha);
+      ITEM *aux = jogador_criar(Jogadores[i].nome, Jogadores[i].num);
+      pilha_empilhar(aux, pilha);
     }
     return pilha;
 }
